@@ -17,3 +17,7 @@ So If you run the code above, you should expect ```stock``` look like this:
 ```
 {'tov3au': ['Toastie Vivacious Aubergine', 4184]}
 ```
+## What's next 
+- Currently a webpage is being developed so everyone can easily get the up to date stock number for jellycat models  
+  
+- Futher __Email__/__Discord__/__Telegram__ bot maybe created to notice user about specific model restocking by request
