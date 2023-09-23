@@ -10,3 +10,10 @@ The Stock variable would be a dictionary variable with following schemetic:
 ```
 stock = {'model1' : ['name1', 'stock count'], 'model2' : ['name2', 'stock count']}
 ```
+```Model``` is the ID of a specific model and size where you can find under the name of the name of each JellyCat name  
+In this example, the ID number is ```TOV3AU```  
+  
+So If you run the code above, you should expect ```stock``` look like this:  
+```
+{'tov3au': ['Toastie Vivacious Aubergine', 4184]}
+```
