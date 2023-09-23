@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 from pprint import pp
 
 import requests
-import pickle
 import ast
 
 
@@ -23,20 +22,22 @@ def get_page(url):
     html = resp.text
     soup = BeautifulSoup(html, "html.parser")
     print("~Response recieved, Start finding stock list")
-    return resp.text
+    return url, resp.text
 
-def get_stock(s):
+def get_stock(url, s):
     soup = BeautifulSoup(s, "html.parser")
     script = soup.findAll("script")
     for n in script:
         if 'variants =' in str(n.text):
             for line in str(n.text).splitlines():
                 if 'variants =' in line:
+                    print("~Stock Information found, Decoding")
                     temp = ast.literal_eval(_helper(n.text, n.text.find('variants =') + 10))
                     rtn = {}
                     for n in temp.keys():
-                        rtn[n] = [temp[n]["name"], temp[n]["stock_level"]]
+                        rtn[n] = [temp[n]["name"], temp[n]["stock_level"], url]
                     return rtn
+    print("~No Stock information found, try a new link")
 
 def _helper(s, i):
     stack = []
@@ -53,5 +54,8 @@ def _helper(s, i):
         end += 1
     return s[i:end]
 
+def check(url):
+    return get_stock(get_page(url))
+
 if __name__ == '__main__':
-    pp(get_stock(get_page("https://www.jellycat.com/us/toastie-vivacious-aubergine-tov3au/")))
+    pp(check("https://www.jellycat.com/us/toastie-vivacious-aubergine-tov3au/"))
