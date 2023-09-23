@@ -8,4 +8,7 @@ setup(name='JellyDog',
       author_email='zhiboh23@gmail.com',
       license='MIT',
       packages=['JellyDog'],
+      install_requires=[
+          'bs4'
+      ],
       zip_safe=False)
