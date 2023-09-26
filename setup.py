@@ -9,6 +9,6 @@ setup(name='JellyDog',
       license='MIT',
       packages=['JellyDog'],
       install_requires=[
-          'bs4'
+          'bs4', 'pprint'
       ],
       zip_safe=False)
