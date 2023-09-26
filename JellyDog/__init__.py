@@ -17,27 +17,34 @@ header = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q
 # with open('html.pkl', 'wb') as f:
 #     pickle.dump(resp, f)
 
-def get_page(url):
+def get_page(url, log):
+    if "https://www.jellycat.com" not in url:
+        if log:
+            print("~Not a Valid url, example url: \"https://www.jellycat.com/us/toastie-vivacious-aubergine-tov3au/\"")
+        return None
     resp = requests.get(url, headers=header)
     html = resp.text
     soup = BeautifulSoup(html, "html.parser")
-    print("~Response recieved, Start finding stock list")
-    return url, resp.text
+    if log:
+        print("~Response recieved, Start finding stock list")
+    return resp.text
 
-def get_stock(url, s):
+def get_stock(url, s, log):
     soup = BeautifulSoup(s, "html.parser")
     script = soup.findAll("script")
     for n in script:
         if 'variants =' in str(n.text):
             for line in str(n.text).splitlines():
                 if 'variants =' in line:
-                    print("~Stock Information found, Decoding")
+                    if log:
+                        print("~Stock Information found, Decoding")
                     temp = ast.literal_eval(_helper(n.text, n.text.find('variants =') + 10))
                     rtn = {}
                     for n in temp.keys():
                         rtn[n] = [temp[n]["name"], temp[n]["stock_level"], url]
                     return rtn
     print("~No Stock information found, try a new link")
+    return None
 
 def _helper(s, i):
     stack = []
@@ -54,8 +61,8 @@ def _helper(s, i):
         end += 1
     return s[i:end]
 
-def check(url):
-    return get_stock(get_page(url))
+def check(url, log=True):
+    return get_stock(url, get_page(url, log), log)
 
 if __name__ == '__main__':
     pp(check("https://www.jellycat.com/us/toastie-vivacious-aubergine-tov3au/"))
