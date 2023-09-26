@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from pprint import pp
+# from pprint import pp
 
 import requests
 import ast
@@ -64,5 +64,5 @@ def _helper(s, i):
 def check(url, log=True):
     return get_stock(url, get_page(url, log), log)
 
-if __name__ == '__main__':
-    pp(check("https://www.jellycat.com/us/toastie-vivacious-aubergine-tov3au/"))
+# if __name__ == '__main__':
+#     pp(check("https://www.jellycat.com/us/toastie-vivacious-aubergine-tov3au/"))
